@@ -149,9 +149,15 @@ def main():
     # Display original articles
     if st.session_state.articles_fetched:
         st.header("📚 Original Articles")
+        
+        # Initialize the current page in session state if it doesn't exist
+        if 'current_page' not in st.session_state:
+            st.session_state.current_page = 1
+
         articles_per_page = 10
-        page = st.number_input("Page", min_value=1, max_value=(len(st.session_state.all_articles) - 1) // articles_per_page + 1, value=1)
-        start_idx = (page - 1) * articles_per_page
+        total_pages = (len(st.session_state.all_articles) - 1) // articles_per_page + 1
+        
+        start_idx = (st.session_state.current_page - 1) * articles_per_page
         end_idx = start_idx + articles_per_page
 
         for i, article in enumerate(st.session_state.all_articles[start_idx:end_idx], start_idx + 1):
@@ -162,6 +168,22 @@ def main():
                 st.write(f"🔗 Link: {article['link']}")
                 st.write("📝 Content:")
                 st.write(article['content'][:500] + "..." if len(article['content']) > 500 else article['content'])
+
+        # Page navigation
+        col1, col2, col3, col4, col5 = st.columns(5)
+        
+        with col1:
+            if st.button("◀️ Previous", disabled=(st.session_state.current_page == 1)):
+                st.session_state.current_page -= 1
+                st.rerun()
+        
+        with col3:
+            st.write(f"Page {st.session_state.current_page} of {total_pages}")
+        
+        with col5:
+            if st.button("Next ▶️", disabled=(st.session_state.current_page == total_pages)):
+                st.session_state.current_page += 1
+                st.rerun()
 
         # Prompt editing
         st.header("🎛️ Customize Prompt")
