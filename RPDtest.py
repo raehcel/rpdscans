@@ -78,10 +78,10 @@ def parse_date(date_string):
 def main():
     st.set_page_config(page_title="SG Food Tech Scanner", page_icon="🍜🔬")
     
-    st.title("Food Tech Scanner🔬")
+    st.title("🍜🔬 Singapore Food Tech Scanner 🌾🐠")
     
     st.markdown("""
-    Welcome to the SFA's Food Tech Scanner! 🚀
+    Welcome to the Singapore Food Tech Scanner! 🇸🇬🚀
 
     This app helps stakeholders in Singapore's food safety and security ecosystem stay updated on the latest technological advancements and applications in four key domains:
     
@@ -107,9 +107,11 @@ def main():
         ('https://aquaculturemag.com/feed/', 'Aquaculture')
     ]
 
-    # Initialize session state to store articles
+    # Initialize session state to store articles and fetch status
     if 'all_articles' not in st.session_state:
         st.session_state.all_articles = []
+    if 'articles_fetched' not in st.session_state:
+        st.session_state.articles_fetched = False
 
     # Fetch Articles button
     if st.button("🔍 Fetch Articles", key="fetch_articles_button"):
@@ -132,39 +134,47 @@ def main():
                         latest_date = max(latest_date, pub_date)
 
             st.session_state.all_articles = all_articles
+            st.session_state.articles_fetched = True
 
         # Display summary message
         st.success("✅ Articles fetched successfully!")
-        st.write(f"📊 Fetched {len(all_articles)} articles in total:")
-        for domain, count in article_counts.items():
-            emoji = {"Agriculture": "🌾", "Aquaculture": "🐠", "Future Food": "🍽️", "Food Safety": "🧪"}.get(domain, "📰")
-            st.write(f"- {emoji} {domain}: {count} articles")
-        st.write(f"📅 Date range: {earliest_date.strftime('%Y-%m-%d')} to {latest_date.strftime('%Y-%m-%d')}")
+        
+        with st.expander("📊 Article Summary", expanded=True):
+            st.write(f"Fetched {len(all_articles)} articles in total:")
+            for domain, count in article_counts.items():
+                emoji = {"Agriculture": "🌾", "Aquaculture": "🐠", "Future Food": "🍽️", "Food Safety": "🧪"}.get(domain, "📰")
+                st.write(f"- {emoji} {domain}: {count} articles")
+            st.write(f"📅 Date range: {earliest_date.strftime('%Y-%m-%d')} to {latest_date.strftime('%Y-%m-%d')}")
 
     # Display original articles
-    if st.session_state.all_articles:
+    if st.session_state.articles_fetched:
         st.header("📚 Original Articles")
-        for i, article in enumerate(st.session_state.all_articles, 1):
+        articles_per_page = 10
+        page = st.number_input("Page", min_value=1, max_value=(len(st.session_state.all_articles) - 1) // articles_per_page + 1, value=1)
+        start_idx = (page - 1) * articles_per_page
+        end_idx = start_idx + articles_per_page
+
+        for i, article in enumerate(st.session_state.all_articles[start_idx:end_idx], start_idx + 1):
             with st.expander(f"Article {i}: {article['title']}"):
                 st.write(f"📅 Date: {article['date']}")
                 st.write(f"🏷️ Domain: {article['domain']}")
                 st.write(f"🔗 Source: {article['source_url']}")
                 st.write(f"🔗 Link: {article['link']}")
                 st.write("📝 Content:")
-                st.write(article['content'])
+                st.write(article['content'][:500] + "..." if len(article['content']) > 500 else article['content'])
 
-    # Prompt editing
-    st.header("🎛️ Customize Prompt")
-    default_prompt = "The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (agriculture, aquaculture, future foods, and food safety) that will impact Singapore's ecosystem. Evaluation should ignore any developments in Singapore as these are likely already known to the stakeholders. Additionally, disregard articles that are just think pieces about the potential of technology without any real application. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks."
-    prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
+        # Prompt editing
+        st.header("🎛️ Customize Prompt")
+        default_prompt = "The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (agriculture, aquaculture, future foods, and food safety) that will impact Singapore's ecosystem. Evaluation should ignore any developments in Singapore as these are likely already known to the stakeholders. Additionally, disregard articles that are just think pieces about the potential of technology without any real application. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks."
+        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
 
-    # Get top articles
-    if st.button("🏆 Get Top Articles", key="get_top_articles_button") and st.session_state.all_articles:
-        articles_text = pformat(st.session_state.all_articles)
-        with st.spinner("Processing articles... 🤖"):
-            top_articles = get_top_articles(articles_text, prompt)
-        st.header("🏅 Top 10 Articles")
-        st.write(top_articles)
+        # Get top articles
+        if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
+            articles_text = pformat(st.session_state.all_articles)
+            with st.spinner("Processing articles... 🤖"):
+                top_articles = get_top_articles(articles_text, prompt)
+            st.header("🏅 Top 10 Articles")
+            st.write(top_articles)
 
 if __name__ == "__main__":
     main()
