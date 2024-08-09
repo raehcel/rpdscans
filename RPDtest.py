@@ -78,10 +78,10 @@ def parse_date(date_string):
 def main():
     st.set_page_config(page_title="SG Food Tech Scanner", page_icon="🍜🔬")
     
-    st.title("🍜🔬 Singapore Food Tech Scanner 🌾🐠")
+    st.title("Food Tech Scanner🔬")
     
     st.markdown("""
-    Welcome to the Singapore Food Tech Scanner! 🇸🇬🚀
+    Welcome to the SFA's Food Tech Scanner! 🚀
 
     This app helps stakeholders in Singapore's food safety and security ecosystem stay updated on the latest technological advancements and applications in four key domains:
     
