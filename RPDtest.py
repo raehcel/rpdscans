@@ -93,8 +93,6 @@ def main():
     The app fetches articles from various reputable sources, analyzes them, and presents the most relevant ones to keep you informed about developments that could impact Singapore's food landscape.
     """)
 
-    # ... [Rest of the main function remains the same] ...
-
     # Define sources with RSS feeds
     rss_sources = [
         ('https://vegconomist.com/feed/', 'Future Food'),
@@ -114,9 +112,26 @@ def main():
         st.session_state.all_articles = []
 
     # Fetch Articles button
-    if st.button("🔍 Fetch Articles"):
+    if st.button("🔍 Fetch Articles", key="fetch_articles_button"):
         with st.spinner("Fetching articles... 🕵️‍♂️"):
-            # ... [Fetching logic remains the same] ...
+            all_articles = []
+            article_counts = defaultdict(int)
+            earliest_date = datetime.now()
+            latest_date = datetime.min
+
+            for url, domain in rss_sources:
+                articles = parse_feed(url, domain)
+                all_articles.extend(articles)
+                article_counts[domain] += len(articles)
+
+                # Update date range
+                for article in articles:
+                    pub_date = parse_date(article['date'])
+                    if pub_date:
+                        earliest_date = min(earliest_date, pub_date)
+                        latest_date = max(latest_date, pub_date)
+
+            st.session_state.all_articles = all_articles
 
         # Display summary message
         st.success("✅ Articles fetched successfully!")
@@ -144,7 +159,7 @@ def main():
     prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
 
     # Get top articles
-    if st.button("🏆 Get Top Articles") and st.session_state.all_articles:
+    if st.button("🏆 Get Top Articles", key="get_top_articles_button") and st.session_state.all_articles:
         articles_text = pformat(st.session_state.all_articles)
         with st.spinner("Processing articles... 🤖"):
             top_articles = get_top_articles(articles_text, prompt)
