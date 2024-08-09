@@ -71,7 +71,7 @@ def get_top_articles(articles_text, prompt):
 
 def parse_date(date_string):
     try:
-        return parser.parse(date_string).replace(tzinfo=None)
+        return parser.parse(date_string)
     except:
         return None
 
@@ -119,7 +119,7 @@ def main():
             all_articles = []
             article_counts = defaultdict(int)
             earliest_date = datetime.now()
-            latest_date = datetime.min
+            latest_date = datetime.min.replace(tzinfo=None)
 
             for url, domain in rss_sources:
                 articles = parse_feed(url, domain)
@@ -130,6 +130,7 @@ def main():
                 for article in articles:
                     pub_date = parse_date(article['date'])
                     if pub_date:
+                        pub_date = pub_date.replace(tzinfo=None)  # Remove timezone info for comparison
                         earliest_date = min(earliest_date, pub_date)
                         latest_date = max(latest_date, pub_date)
 
