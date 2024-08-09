@@ -71,7 +71,7 @@ def get_top_articles(articles_text, prompt):
 
 def parse_date(date_string):
     try:
-        return parser.parse(date_string)
+        return parser.parse(date_string).replace(tzinfo=timezone.utc)
     except:
         return None
 
@@ -107,19 +107,23 @@ def main():
         ('https://aquaculturemag.com/feed/', 'Aquaculture')
     ]
 
-    # Initialize session state to store articles and fetch status
+     # Initialize session state variables
     if 'all_articles' not in st.session_state:
         st.session_state.all_articles = []
     if 'articles_fetched' not in st.session_state:
         st.session_state.articles_fetched = False
+    if 'article_summary' not in st.session_state:
+        st.session_state.article_summary = ""
+    if 'date_range' not in st.session_state:
+        st.session_state.date_range = ""
 
     # Fetch Articles button
     if st.button("🔍 Fetch Articles", key="fetch_articles_button"):
         with st.spinner("Fetching articles... 🕵️‍♂️"):
             all_articles = []
             article_counts = defaultdict(int)
-            earliest_date = datetime.now()
-            latest_date = datetime.min.replace(tzinfo=None)
+            earliest_date = datetime.now(timezone.utc)
+            latest_date = datetime.min.replace(tzinfo=timezone.utc)
 
             for url, domain in rss_sources:
                 articles = parse_feed(url, domain)
@@ -130,25 +134,29 @@ def main():
                 for article in articles:
                     pub_date = parse_date(article['date'])
                     if pub_date:
-                        pub_date = pub_date.replace(tzinfo=None)  # Remove timezone info for comparison
                         earliest_date = min(earliest_date, pub_date)
                         latest_date = max(latest_date, pub_date)
 
             st.session_state.all_articles = all_articles
             st.session_state.articles_fetched = True
 
-        # Display summary message
-        st.success("✅ Articles fetched successfully!")
-        
-        with st.expander("📊 Article Summary", expanded=True):
-            st.write(f"Fetched {len(all_articles)} articles in total:")
+            # Create and store the summary
+            summary = f"Fetched {len(all_articles)} articles in total:\n"
             for domain, count in article_counts.items():
                 emoji = {"Agriculture": "🌾", "Aquaculture": "🐠", "Future Food": "🍽️", "Food Safety": "🧪"}.get(domain, "📰")
-                st.write(f"- {emoji} {domain}: {count} articles")
-            st.write(f"📅 Date range: {earliest_date.strftime('%Y-%m-%d')} to {latest_date.strftime('%Y-%m-%d')}")
+                summary += f"- {emoji} {domain}: {count} articles\n"
+            st.session_state.article_summary = summary
+            st.session_state.date_range = f"📅 Date range: {earliest_date.strftime('%Y-%m-%d')} to {latest_date.strftime('%Y-%m-%d')}"
 
-    # Display original articles
+        st.success("✅ Articles fetched successfully!")
+
+    # Display summary if articles have been fetched
     if st.session_state.articles_fetched:
+        with st.expander("📊 Article Summary", expanded=True):
+            st.write(st.session_state.article_summary)
+            st.write(st.session_state.date_range)
+
+        # Display original articles
         st.header("📚 Original Articles")
         
         # Initialize the current page in session state if it doesn't exist
