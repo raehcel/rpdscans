@@ -5,6 +5,8 @@ import requests
 from html import unescape
 from bs4 import BeautifulSoup
 from openai import OpenAI
+from datetime import datetime
+from collections import defaultdict
 import os
 from pprint import pformat
 
@@ -84,22 +86,49 @@ def main():
         ('https://aquaculturemag.com/feed/', 'Aquaculture')
     ]
 
-    # Process RSS feeds
-    all_articles = []
-    for url, domain in rss_sources:
-        articles = parse_feed(url, domain)
-        all_articles.extend(articles)
+    # Initialize session state to store articles
+    if 'all_articles' not in st.session_state:
+        st.session_state.all_articles = []
+
+    # Fetch Articles button
+    if st.button("Fetch Articles"):
+        with st.spinner("Fetching articles..."):
+            all_articles = []
+            article_counts = defaultdict(int)
+            earliest_date = datetime.now()
+            latest_date = datetime.min
+
+            for url, domain in rss_sources:
+                articles = parse_feed(url, domain)
+                all_articles.extend(articles)
+                article_counts[domain] += len(articles)
+
+                # Update date range
+                for article in articles:
+                    pub_date = datetime.strptime(article['date'], '%a, %d %b %Y %H:%M:%S %z')
+                    earliest_date = min(earliest_date, pub_date)
+                    latest_date = max(latest_date, pub_date)
+
+            st.session_state.all_articles = all_articles
+
+        # Display summary message
+        st.success("Articles fetched successfully!")
+        st.write(f"Fetched {len(all_articles)} articles in total:")
+        for domain, count in article_counts.items():
+            st.write(f"- {domain}: {count} articles")
+        st.write(f"Date range: {earliest_date.strftime('%Y-%m-%d')} to {latest_date.strftime('%Y-%m-%d')}")
 
     # Display original articles
-    st.header("Original Articles")
-    for i, article in enumerate(all_articles, 1):
-        with st.expander(f"Article {i}: {article['title']}"):
-            st.write(f"Date: {article['date']}")
-            st.write(f"Domain: {article['domain']}")
-            st.write(f"Source: {article['source_url']}")
-            st.write(f"Link: {article['link']}")
-            st.write("Content:")
-            st.write(article['content'])
+    if st.session_state.all_articles:
+        st.header("Original Articles")
+        for i, article in enumerate(st.session_state.all_articles, 1):
+            with st.expander(f"Article {i}: {article['title']}"):
+                st.write(f"Date: {article['date']}")
+                st.write(f"Domain: {article['domain']}")
+                st.write(f"Source: {article['source_url']}")
+                st.write(f"Link: {article['link']}")
+                st.write("Content:")
+                st.write(article['content'])
 
     # Prompt editing
     st.header("Customize Prompt")
@@ -107,8 +136,8 @@ def main():
     prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
 
     # Get top articles
-    if st.button("Get Top Articles"):
-        articles_text = pformat(all_articles)
+    if st.button("Get Top Articles") and st.session_state.all_articles:
+        articles_text = pformat(st.session_state.all_articles)
         with st.spinner("Processing articles..."):
             top_articles = get_top_articles(articles_text, prompt)
         st.header("Top 10 Articles")
