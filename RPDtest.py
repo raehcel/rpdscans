@@ -17,10 +17,15 @@ logger = logging.getLogger(__name__)
 # Initialize the OpenAI client
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-
 def clean_html_content(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     return soup.get_text(separator='\n', strip=True)
+
+def parse_date(date_string):
+    try:
+        return parser.parse(date_string).replace(tzinfo=timezone.utc)
+    except:
+        return None
 
 def parse_feed(url, domain):
     logger.debug(f"Attempting to parse feed: {url}")
@@ -69,12 +74,6 @@ def get_top_articles(articles_text, prompt):
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
-def parse_date(date_string):
-    try:
-        return parser.parse(date_string).replace(tzinfo=timezone.utc)
-    except:
-        return None
-
 def main():
     st.set_page_config(page_title="SG Food Tech Scanner", page_icon="🍜🔬")
     
@@ -107,7 +106,7 @@ def main():
         ('https://aquaculturemag.com/feed/', 'Aquaculture')
     ]
 
-     # Initialize session state variables
+    # Initialize session state variables
     if 'all_articles' not in st.session_state:
         st.session_state.all_articles = []
     if 'articles_fetched' not in st.session_state:
@@ -116,6 +115,8 @@ def main():
         st.session_state.article_summary = ""
     if 'date_range' not in st.session_state:
         st.session_state.date_range = ""
+    if 'current_page' not in st.session_state:
+        st.session_state.current_page = 1
 
     # Fetch Articles button
     if st.button("🔍 Fetch Articles", key="fetch_articles_button"):
@@ -159,10 +160,6 @@ def main():
         # Display original articles
         st.header("📚 Original Articles")
         
-        # Initialize the current page in session state if it doesn't exist
-        if 'current_page' not in st.session_state:
-            st.session_state.current_page = 1
-
         articles_per_page = 10
         total_pages = (len(st.session_state.all_articles) - 1) // articles_per_page + 1
         
