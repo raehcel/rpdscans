@@ -69,6 +69,12 @@ def get_top_articles(articles_text, prompt):
     except Exception as e:
         return f"An error occurred: {str(e)}"
 
+def parse_date(date_string):
+    try:
+        return parser.parse(date_string).replace(tzinfo=None)
+    except:
+        return None
+
 def main():
     st.title("Article Selector for Singapore Food Safety and Security")
 
@@ -105,9 +111,10 @@ def main():
 
                 # Update date range
                 for article in articles:
-                    pub_date = datetime.strptime(article['date'], '%a, %d %b %Y %H:%M:%S %z')
-                    earliest_date = min(earliest_date, pub_date)
-                    latest_date = max(latest_date, pub_date)
+                    pub_date = parse_date(article['date'])
+                    if pub_date:
+                        earliest_date = min(earliest_date, pub_date)
+                        latest_date = max(latest_date, pub_date)
 
             st.session_state.all_articles = all_articles
 
@@ -143,5 +150,7 @@ def main():
         st.header("Top 10 Articles")
         st.write(top_articles)
 
+if __name__ == "__main__":
+    main()
 if __name__ == "__main__":
     main()
