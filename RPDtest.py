@@ -1,3 +1,5 @@
+Singapore Food Tech Scanner - Full Updated Script
+
 import streamlit as st
 import feedparser
 import logging
@@ -9,6 +11,7 @@ from datetime import datetime, timezone
 from collections import defaultdict
 import os
 from pprint import pformat
+from dateutil import parser
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -63,10 +66,10 @@ def get_top_articles(articles_text, prompt):
         chat_completion = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are an AI assistant tasked with selecting the top 10 articles most relevant to stakeholders in Singapore's food safety and security."},
-                {"role": "user", "content": f"{prompt}\n\nHere is a list of articles:\n\n{articles_text}\n\nPlease select the top 10 articles that are most relevant to stakeholders in Singapore's food safety and security. For each article, provide the name, link, a brief description, and explain why it's important."}
+                {"role": "system", "content": "You are an AI assistant tasked with selecting the top 5 articles for each domain (agriculture, aquaculture, future foods, and food safety) most relevant to stakeholders in Singapore's food safety and security."},
+                {"role": "user", "content": f"{prompt}\n\nHere is a list of articles:\n\n{articles_text}"}
             ],
-            max_tokens=2000,
+            max_tokens=2500,
             n=1,
             temperature=0.5,
         )
@@ -193,15 +196,28 @@ def main():
 
         # Prompt editing
         st.header("🎛️ Customize Prompt")
-        default_prompt = "The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (agriculture, aquaculture, future foods, and food safety) that will impact Singapore's ecosystem. Evaluation should ignore any developments in Singapore as these are likely already known to the stakeholders. Additionally, disregard articles that are just think pieces about the potential of technology without any real application. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks."
-        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
+        default_prompt = """The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (agriculture, aquaculture, future foods, and food safety) that will impact Singapore's ecosystem. Please select the top 5 articles for each domain (agriculture, aquaculture, future foods, and food safety) that are most relevant to stakeholders in Singapore's food safety and security.
+
+        Evaluation criteria:
+        1. Ignore any developments in Singapore as these are likely already known to the stakeholders.
+        2. Disregard articles that are just think pieces about the potential of technology without any real application.
+        3. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks.
+
+        For each article, provide:
+        1. The article title
+        2. The link to the article
+        3. A brief description (2-3 sentences)
+        4. An explanation of why it's important for Singapore's food ecosystem (1-2 sentences)
+
+        Organize the results by domain, clearly labeling each section."""
+        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=300)
 
         # Get top articles
         if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
             articles_text = pformat(st.session_state.all_articles)
             with st.spinner("Processing articles... 🤖"):
                 top_articles = get_top_articles(articles_text, prompt)
-            st.header("🏅 Top 10 Articles")
+            st.header("🏅 Top 5 Articles for Each Domain")
             st.write(top_articles)
 
 if __name__ == "__main__":
