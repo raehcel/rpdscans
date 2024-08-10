@@ -1,3 +1,5 @@
+Singapore Food Tech Scanner - Full Updated Script
+
 import streamlit as st
 import feedparser
 import logging
@@ -59,13 +61,14 @@ def parse_feed(url, domain):
         logger.error(f"Error parsing RSS feed {url}: {str(e)}")
         return []
 
-def get_top_articles(articles_text, prompt):
+def get_top_articles(articles_by_domain, prompt):
     try:
+        articles_text = pformat(articles_by_domain)
         chat_completion = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are an AI assistant tasked with selecting the top 5 articles for each domain (agriculture, aquaculture, future foods, and food safety) most relevant to stakeholders in Singapore's food safety and security."},
-                {"role": "user", "content": f"{prompt}\n\nHere is a list of articles:\n\n{articles_text}"}
+                {"role": "user", "content": f"{prompt}\n\nHere is a list of articles organized by domain:\n\n{articles_text}"}
             ],
             max_tokens=2500,
             n=1,
@@ -108,28 +111,30 @@ def main():
     ]
 
     # Initialize session state variables
-    if 'all_articles' not in st.session_state:
-        st.session_state.all_articles = []
+    if 'articles_by_domain' not in st.session_state:
+        st.session_state.articles_by_domain = defaultdict(list)
     if 'articles_fetched' not in st.session_state:
         st.session_state.articles_fetched = False
     if 'article_summary' not in st.session_state:
         st.session_state.article_summary = ""
     if 'date_range' not in st.session_state:
         st.session_state.date_range = ""
+    if 'current_domain' not in st.session_state:
+        st.session_state.current_domain = "Agriculture"
     if 'current_page' not in st.session_state:
         st.session_state.current_page = 1
 
     # Fetch Articles button
     if st.button("🔍 Fetch Articles", key="fetch_articles_button"):
         with st.spinner("Fetching articles... 🕵️‍♂️"):
-            all_articles = []
+            articles_by_domain = defaultdict(list)
             article_counts = defaultdict(int)
             earliest_date = datetime.now(timezone.utc)
             latest_date = datetime.min.replace(tzinfo=timezone.utc)
 
             for url, domain in rss_sources:
                 articles = parse_feed(url, domain)
-                all_articles.extend(articles)
+                articles_by_domain[domain].extend(articles)
                 article_counts[domain] += len(articles)
 
                 # Update date range
@@ -139,11 +144,11 @@ def main():
                         earliest_date = min(earliest_date, pub_date)
                         latest_date = max(latest_date, pub_date)
 
-            st.session_state.all_articles = all_articles
+            st.session_state.articles_by_domain = articles_by_domain
             st.session_state.articles_fetched = True
 
             # Create and store the summary
-            summary = f"Fetched {len(all_articles)} articles in total:\n"
+            summary = f"Fetched {sum(article_counts.values())} articles in total:\n"
             for domain, count in article_counts.items():
                 emoji = {"Agriculture": "🌾", "Aquaculture": "🐠", "Future Food": "🍽️", "Food Safety": "🧪"}.get(domain, "📰")
                 summary += f"- {emoji} {domain}: {count} articles\n"
@@ -161,16 +166,19 @@ def main():
         # Display original articles
         st.header("📚 Original Articles")
         
+        # Domain selection
+        st.session_state.current_domain = st.selectbox("Select Domain", list(st.session_state.articles_by_domain.keys()))
+
+        articles = st.session_state.articles_by_domain[st.session_state.current_domain]
         articles_per_page = 10
-        total_pages = (len(st.session_state.all_articles) - 1) // articles_per_page + 1
+        total_pages = (len(articles) - 1) // articles_per_page + 1
         
         start_idx = (st.session_state.current_page - 1) * articles_per_page
         end_idx = start_idx + articles_per_page
 
-        for i, article in enumerate(st.session_state.all_articles[start_idx:end_idx], start_idx + 1):
+        for i, article in enumerate(articles[start_idx:end_idx], start_idx + 1):
             with st.expander(f"Article {i}: {article['title']}"):
                 st.write(f"📅 Date: {article['date']}")
-                st.write(f"🏷️ Domain: {article['domain']}")
                 st.write(f"🔗 Source: {article['source_url']}")
                 st.write(f"🔗 Link: {article['link']}")
                 st.write("📝 Content:")
@@ -212,9 +220,8 @@ def main():
 
         # Get top articles
         if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
-            articles_text = pformat(st.session_state.all_articles)
             with st.spinner("Processing articles... 🤖"):
-                top_articles = get_top_articles(articles_text, prompt)
+                top_articles = get_top_articles(st.session_state.articles_by_domain, prompt)
             st.header("🏅 Top 5 Articles for Each Domain")
             st.write(top_articles)
 
