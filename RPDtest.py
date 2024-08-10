@@ -5,7 +5,7 @@ import requests
 from html import unescape
 from bs4 import BeautifulSoup
 from openai import OpenAI
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import defaultdict
 import os
 from pprint import pformat
