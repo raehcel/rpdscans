@@ -1,5 +1,3 @@
-Singapore Food Tech Scanner - Full Updated Script
-
 import streamlit as st
 import feedparser
 import logging
