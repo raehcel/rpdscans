@@ -216,12 +216,11 @@ def main():
 
         For each article, provide:
         1. The article title with a hyperlink
-        2. The link to the article
-        3. Provide a QR code that links to the article
-        4. Description on the article of what is the discovery about and researchers involved for technology related articles in 2-3 sentences
-        5. For grants or investment related articles provide 2-3 sentences on the area of research, topics and projects funded
-        6. Also, include what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem in 2 sentences
-        7. All sentences in past tense
+        2. Provide a QR code that links to the article
+        3. Description on the article of what is the discovery about and researchers involved for technology related articles in 2-3 sentences
+        4. For grants or investment related articles provide 2-3 sentences on the area of research, topics and projects funded
+        5. Also, include what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem in 2 sentences
+        6. All sentences in past tense
 
         Organize the results by domain, clearly labeling each section."""
         prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=300)
