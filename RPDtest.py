@@ -105,7 +105,14 @@ def main():
         ('https://phys.org/rss-feed/biology-news/agriculture/', 'Agriculture'),
         ('https://www.agriculturedive.com/feeds/news/', 'Agriculture'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
-        ('https://aquaculturemag.com/feed/', 'Aquaculture')
+        ('https://aquaculturemag.com/feed/', 'Aquaculture'),  
+        ('https://www.globalagtechinitiative.com/digital-farming/', 'Agriculture'),
+        ('https://www.thecooldown.com/green-tech/', 'Agriculture'),
+        ('https://www.food-safety.com/keywords/1870-grants', 'Agriculture'),
+        ('https://agfundernews.com/category/agtech-2', 'Agriculture'),
+        ('https://www.newscientist.com/subject/environment/', 'Agriculture'),
+        ('https://hatcheryfm.com/fish/', 'Aquaculture'),
+        ('https://hatcheryfm.com/shrimp/', 'Aquaculture'),
     ]
 
     # Initialize session state variables
@@ -210,8 +217,11 @@ def main():
         For each article, provide:
         1. The article title
         2. The link to the article
-        3. A brief description (2-3 sentences)
-        4. An explanation of why it's important for Singapore's food ecosystem (1-2 sentences)
+        3. Provide a QR code that links to the article
+        4. A description on the article of what is the discovery about and researchers involved for technology related articles (2-3 sentences)
+        5. For grants or investment related articles provide a description on the area of research, topics and projects funded (2-3 sentences)
+        6. Also, include what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem (2 sentences)
+        7. Phrase it in past tense
 
         Organize the results by domain, clearly labeling each section."""
         prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=300)
