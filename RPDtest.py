@@ -101,7 +101,6 @@ def main():
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
         ('https://www.sciencenews.org/feed', 'Food Safety'),
         ('https://www.food-safety.com/rss/topic/296-news', 'Food Safety'),
-        ('https://www.nature.com/natfood.rss', 'Agriculture'),
         ('https://phys.org/rss-feed/biology-news/agriculture/', 'Agriculture'),
         ('https://www.agriculturedive.com/feeds/news/', 'Agriculture'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
@@ -113,6 +112,7 @@ def main():
         ('https://www.newscientist.com/subject/environment/', 'Agriculture'),
         ('https://hatcheryfm.com/fish/', 'Aquaculture'),
         ('https://hatcheryfm.com/shrimp/', 'Aquaculture'),
+        ('https://interestingengineering.com/science', 'Agriculture')
     ]
 
     # Initialize session state variables
@@ -215,11 +215,11 @@ def main():
         3. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks.
 
         For each article, provide:
-        1. The article title with a hyperlink
-        2. Provide a QR code that links to the article
-        3. Description on the article of what is the discovery about and researchers involved for technology related articles in 2-3 sentences
-        4. For grants or investment related articles provide 2-3 sentences on the area of research, topics and projects funded
-        5. Also, include what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem in 2 sentences
+        1. The article title
+        2. Article title with hyperlink
+        3. Provide QR code that links to the article
+        4. Retrieve 3 sentences from the article of what is the project research about, and organisations and researchers involved
+        5. Also, retrieve 2 sentences that includes what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem in 2 sentences
         6. All sentences in past tense
 
         Organize the results by domain, clearly labeling each section."""
