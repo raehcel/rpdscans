@@ -216,11 +216,12 @@ def main():
 
         For each article, provide:
         1. The article title
-        2. Article title with hyperlink
+        2. Embed a hyperlink within the article's title
         3. Provide QR code that links to the article
-        4. Retrieve three sentences from the article of what is the project research about and who are the organisations and researchers involved. Also, retrieve two sentences from the article that state the research developments and results 
-        5. Also, retrieve two sentences that includes what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem in two sentences
-        6. All sentences in past tense
+        4. Retrieve five sentences from the article of what is the project research about and who are the organisations and researchers involved. 
+        5. Retrieve three sentences from the article that state the research developments and results 
+        6. Retrieve three sentences that includes what are the next steps of the discovery and explanation of why it's important for Singapore's food ecosystem in two sentences
+        7. All sentences in past tense
 
         Organize the results by domain, clearly labeling each section."""
         prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=300)
