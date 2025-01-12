@@ -107,7 +107,7 @@ def main():
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),  
         ('https://www.globalagtechinitiative.com/digital-farming/', 'Agriculture'),
         ('https://www.thecooldown.com/green-tech/', 'Agriculture'),
-        ('https://www.food-safety.com/keywords/1870-grants', 'Agriculture'),
+        ('https://www.food-safety.com/keywords/1870-grants', 'Food Safety'),
         ('https://agfundernews.com/category/agtech-2', 'Agriculture'),
         ('https://www.newscientist.com/subject/environment/', 'Agriculture'),
         ('https://hatcheryfm.com/fish/', 'Aquaculture'),
@@ -207,7 +207,7 @@ def main():
 
         # Prompt editing
         st.header("🎛️ Customize Prompt")
-        default_prompt = """The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (agriculture, aquaculture, future foods, and food safety) that will impact Singapore's ecosystem. Please select the top 5 articles for each domain (agriculture, aquaculture, future foods, and food safety) that are most relevant to stakeholders in Singapore's food safety and security.
+        default_prompt = """The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (agriculture, aquaculture, future foods, and food safety) that will impact Singapore's ecosystem. Please select the top three articles for each domain (agriculture, aquaculture, future foods, and food safety) that are most relevant to stakeholders in Singapore's food safety and security. Ensure the recommended articles cover diverse topics, avoiding duplication of subject matter.
 
         Evaluation criteria:
         1. Ignore any developments in Singapore as these are likely already known to the stakeholders.
