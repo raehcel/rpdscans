@@ -218,8 +218,8 @@ def main():
         1. The article title
         2. Article title with hyperlink
         3. Provide QR code that links to the article
-        4. Retrieve 3 sentences from the article of what is the project research about, and organisations and researchers involved
-        5. Also, retrieve 2 sentences that includes what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem in 2 sentences
+        4. Retrieve three 3 sentences from the article of what is the project research about and who are the organisations and researchers involved. Also, retrieve two sentences from the article that state the research developments and results 
+        5. Also, retrieve two sentences that includes what are the future plans of the discovery and an explanation of why it's important for Singapore's food ecosystem in two sentences
         6. All sentences in past tense
 
         Organize the results by domain, clearly labeling each section."""
