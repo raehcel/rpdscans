@@ -218,9 +218,9 @@ def main():
         1. The article title
         2. Embed a hyperlink within the article's title
         3. Provide QR code that links to the article
-        4. Retrieve five sentences from the article of what is the research topic about and name who are the organisations and the researchers involved. Provide the complete expansion of the acronym. 
-        5. Retrieve four sentences from the article that state the research developments, challenges and results 
-        6. Retrieve three sentences that includes what are the next steps of the developments
+        4. Retrieve five sentences from the article of what is the research focus, name who are the organisations and the researchers involved, what is the significance of the research focus in domain space and the benefits of the research. Provide the complete expansion of the acronym. 
+        5. Retrieve four sentences from the article that state the research achievements, challenges and results 
+        6. Retrieve three sentences from the article that includes what are the future steps planned or can be expected in the research
         7. All sentences in past tense
 
         Organize the results by domain, clearly labeling each section."""
