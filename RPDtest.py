@@ -211,7 +211,7 @@ def main():
       For each article, provide:
        1. Extract the article title.
        2. Generate a hyperlink using the article title as the anchor text and the article URL as the target.
-       3. Create a QR code linking to the article URL, with dimensions of 2.54cm x 2.54cm.
+       3. Provide QR code that is 2.54cm by 2.54cm that links to the article
        4. Analyse the article content and extract five key sentences that: a) Describe the main subject focus b) Identify the organisations and researchers involved c) Explain the significance of the subject in its domain d) Outline the benefits of the research e) Expand any acronyms used
        5. Extract four sentences from the article that summarise: a) The achievements b) The challenges faced c) The results obtained
        6. Identify and extract three sentences that outline planned future steps or directions for the research.
@@ -230,3 +230,27 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
