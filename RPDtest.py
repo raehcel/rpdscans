@@ -201,7 +201,7 @@ def main():
 
         # Prompt editing
         st.header("🎛️ Customize Prompt")
-        default_prompt = """The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (agriculture, aquaculture, future foods, and food safety) that will impact Singapore's ecosystem. Please select the top five articles for each domain (agriculture, aquaculture, future foods, and food safety) that are most relevant to stakeholders in Singapore's food safety and security. Ensure the recommended articles cover diverse topics, avoiding duplication of subject matter.
+        default_prompt = """The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (food safety, agriculture, aquaculture and future foods) that will impact Singapore's ecosystem. Please select the top five articles for each domain (food safety, agriculture, aquaculture and future foods) that are most relevant to stakeholders in Singapore's food safety and security. Ensure the recommended articles cover diverse topics, avoiding duplication of subject matter.
         Evaluation criteria:
         1. Ignore any developments in Singapore as these are likely already known to the stakeholders.
         2. Disregard articles that are just think pieces about the potential of technology without any real application.
@@ -209,13 +209,13 @@ def main():
         4. Ensure articles are reordered every day to showcase different areas of the domain. 
 
       For each article, provide:
-       1. Extract the article title.
-       2. Generate a hyperlink using the article title as the anchor text and the article URL as the target.
-       3. Provide QR code that is 2.54cm by 2.54cm that links to the article
-       4. Analyse the article content and extract five key sentences that: a) Describe the main subject focus b) Identify the organisations and researchers involved c) Explain the significance of the subject in its domain d) Outline the benefits of the research e) Expand any acronyms used
-       5. Extract four sentences from the article that summarise: a) The achievements b) The challenges faced c) The results obtained
-       6. Identify and extract three sentences that outline planned future steps or directions for the research.
-       7. Rephrase all extracted sentences in the past tense.
+        1. The article title
+        2. Embed a hyperlink to the article within the article's title
+        3. Provide QR code that is 2.54cm by 2.54cm that links to the article  
+        4. Retrieve five sentences from the article of what is the subject focus, list who are the organisations and the researchers involved, what is the significance of the subject focus in the domain space and its benefits. Provide the complete expansion of the acronym. 
+        5. Retrieve four sentences from the article the achievements, challenges and results. 
+        6. Retrieve three sentences from the article that includes what are the future steps planned.
+        7. All sentences phrased in past tense.
 
         Organize the results by domain, clearly labeling each section."""
         prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
