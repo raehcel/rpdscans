@@ -208,7 +208,7 @@ def main():
         3. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks.
         4. Ensure articles are reordered every day to showcase different areas of the domain. 
 
-      For each article, provide:
+        For each article, provide:
         1. The article title
         2. Embed a hyperlink to the article within the article's title
         3. Provide QR code that is 2.54cm by 2.54cm that links to the article  
@@ -230,27 +230,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
