@@ -209,52 +209,13 @@ def main():
         4. Ensure articles are reordered every day to showcase different areas of the domain. 
 
       For each article, provide:
-       import qrcode
-from io import BytesIO
-import streamlit as st
-from PIL import Image
-
-def process_article(article):
-    # 1 & 2. Article title with hyperlink
-    st.markdown(f"[{article['title']}]({article['url']})")
-
-    # 3. Generate QR code
-    qr = qrcode.QRCode(version=1, box_size=10, border=5)
-    qr.add_data(article['url'])
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    
-    # Resize QR code to 2.54cm x 2.54cm (assuming 96 DPI)
-    img = img.resize((96, 96))
-    
-    # Convert PIL Image to bytes
-    buf = BytesIO()
-    img.save(buf, format="PNG")
-    
-    # Display QR code
-    st.image(buf.getvalue(), caption="Scan to read article", width=96)
-
-    # 4-7. Retrieve and display article information
-    st.write("Subject Focus, Organizations, and Researchers:")
-    subject_focus = retrieve_sentences(article['content'], 5, focus="subject_focus")
-    st.write(subject_focus)
-
-    st.write("Achievements, Challenges, and Results:")
-    achievements = retrieve_sentences(article['content'], 4, focus="achievements")
-    st.write(achievements)
-
-    st.write("Future Steps:")
-    future_steps = retrieve_sentences(article['content'], 3, focus="future_steps")
-    st.write(future_steps)
-
-def retrieve_sentences(content, num_sentences, focus):
-    # This function should implement NLP techniques to extract relevant sentences
-    # and convert them to past tense. For simplicity, we'll return placeholder text.
-    return f"Placeholder: {num_sentences} sentences about {focus} in past tense."
-
-# Assuming you have a list of articles
-for article in articles:
-    process_article(article)
+       1. Extract the article title.
+       2. Generate a hyperlink using the article title as the anchor text and the article URL as the target.
+       3. Create a QR code linking to the article URL, with dimensions of 2.54cm x 2.54cm.
+       4. Analyse the article content and extract five key sentences that: a) Describe the main subject focus b) Identify the organisations and researchers involved c) Explain the significance of the subject in its domain d) Outline the benefits of the research e) Expand any acronyms used
+       5. Extract four sentences from the article that summarise: a) The achievements b) The challenges faced c) The results obtained
+       6. Identify and extract three sentences that outline planned future steps or directions for the research.
+       7. Rephrase all extracted sentences in the past tense.
 
         Organize the results by domain, clearly labeling each section."""
         prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
