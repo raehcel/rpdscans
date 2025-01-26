@@ -101,20 +101,12 @@ def main():
         ('https://vegconomist.com/feed/', 'Future Food'),
         ('https://www.just-food.com/feed/', 'Future Food'),
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
-        ('https://www.sciencenews.org/feed', 'Food Safety'),
-        ('https://www.food-safety.com/rss/topic/296-news', 'Food Safety'),
-        ('https://phys.org/rss-feed/biology-news/agriculture/', 'Agriculture'),
-        ('https://www.agriculturedive.com/feeds/news/', 'Agriculture'),
+        ('https://news.google.com/search?q=current%20Real-time%20food%20microbial%20contamination%20detection%20newsletter&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Food Safety'),
+        ('https://news.google.com/search?q=food%20safety%20grant%20programmes&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Food Safety'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
-        ('https://aquaculturemag.com/feed/', 'Aquaculture'),  
-        ('https://www.globalagtechinitiative.com/digital-farming/', 'Agriculture'),
-        ('https://www.thecooldown.com/green-tech/', 'Agriculture'),
-        ('https://www.food-safety.com/keywords/1870-grants', 'Food Safety'),
-        ('https://agfundernews.com/category/agtech-2', 'Agriculture'),
-        ('https://www.newscientist.com/subject/environment/', 'Agriculture'),
+        ('https://aquaculturemag.com/feed/', 'Aquaculture'),
         ('https://hatcheryfm.com/fish/', 'Aquaculture'),
-        ('https://hatcheryfm.com/shrimp/', 'Aquaculture'),
-        ('https://interestingengineering.com/science', 'Agriculture')
+        ('https://hatcheryfm.com/shrimp/', 'Aquaculture')
     ]
 
     # Initialize session state variables
@@ -226,13 +218,14 @@ def main():
         7. All sentences phrased in past tense.
 
         Organize the results by domain, clearly labeling each section."""
-        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
+        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=100)
 
         # Get top articles
         if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
             with st.spinner("Processing articles... 🤖"):
                 top_articles = get_top_articles(st.session_state.articles_by_domain, prompt)
             st.header("🏅 Top 5 Articles for Each Domain")
+            st.write("Note: All 5 articles must be provided for each domain.")
             st.write(top_articles)
 
 if __name__ == "__main__":
