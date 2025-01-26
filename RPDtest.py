@@ -208,17 +208,56 @@ def main():
         3. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks.
         4. Ensure articles are reordered every day to showcase different areas of the domain. 
 
-        For each article, provide:
-        1. The article title
-        2. Embed a hyperlink within the article's title
-        3. Provide QR code that is 2.54cm by 2.54cm that links to the article  
-        4. Retrieve five sentences from the article of what is the subject focus, list who are the organisations and the researchers involved, what is the significance of the subject focus in the domain space and its benefits. Provide the complete expansion of the acronym. 
-        5. Retrieve four sentences from the article the achievements, challenges and results. 
-        6. Retrieve three sentences from the article that includes what are the future steps planned.
-        7. All sentences phrased in past tense.
+      For each article, provide:
+       import qrcode
+from io import BytesIO
+import streamlit as st
+from PIL import Image
+
+def process_article(article):
+    # 1 & 2. Article title with hyperlink
+    st.markdown(f"[{article['title']}]({article['url']})")
+
+    # 3. Generate QR code
+    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr.add_data(article['url'])
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    
+    # Resize QR code to 2.54cm x 2.54cm (assuming 96 DPI)
+    img = img.resize((96, 96))
+    
+    # Convert PIL Image to bytes
+    buf = BytesIO()
+    img.save(buf, format="PNG")
+    
+    # Display QR code
+    st.image(buf.getvalue(), caption="Scan to read article", width=96)
+
+    # 4-7. Retrieve and display article information
+    st.write("Subject Focus, Organizations, and Researchers:")
+    subject_focus = retrieve_sentences(article['content'], 5, focus="subject_focus")
+    st.write(subject_focus)
+
+    st.write("Achievements, Challenges, and Results:")
+    achievements = retrieve_sentences(article['content'], 4, focus="achievements")
+    st.write(achievements)
+
+    st.write("Future Steps:")
+    future_steps = retrieve_sentences(article['content'], 3, focus="future_steps")
+    st.write(future_steps)
+
+def retrieve_sentences(content, num_sentences, focus):
+    # This function should implement NLP techniques to extract relevant sentences
+    # and convert them to past tense. For simplicity, we'll return placeholder text.
+    return f"Placeholder: {num_sentences} sentences about {focus} in past tense."
+
+# Assuming you have a list of articles
+for article in articles:
+    process_article(article)
 
         Organize the results by domain, clearly labeling each section."""
-        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=100)
+        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
 
         # Get top articles
         if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
