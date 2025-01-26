@@ -96,6 +96,8 @@ def main():
 
     # Define sources with RSS feeds
     rss_sources = [
+        ('https://news.google.com/search?q=agriculture%20technology%20when%3A7d&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
+        ('https://news.google.com/search?q=agriculture%20grant%20programmes&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
         ('https://vegconomist.com/feed/', 'Future Food'),
         ('https://www.just-food.com/feed/', 'Future Food'),
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
@@ -175,7 +177,7 @@ def main():
         st.session_state.current_domain = st.selectbox("Select Domain", list(st.session_state.articles_by_domain.keys()))
 
         articles = st.session_state.articles_by_domain[st.session_state.current_domain]
-        articles_per_page = 10
+        articles_per_page = 5
         total_pages = (len(articles) - 1) // articles_per_page + 1
         
         start_idx = (st.session_state.current_page - 1) * articles_per_page
@@ -217,14 +219,14 @@ def main():
         For each article, provide:
         1. The article title
         2. Embed a hyperlink within the article's title
-        3. Provide QR code that links to the article  
-        4. Retrieve five sentences from the article of what is the research focus, name who are the organisations and the researchers involved, what is the significance of the research focus in domain space and the benefits of the research. Provide the complete expansion of the acronym. 
-        5. Retrieve four sentences from the article that state the research achievements, challenges and results 
-        6. Retrieve three sentences from the article that includes what are the future steps planned or can be expected in the research
-        7. All sentences in past tense
+        3. Provide QR code that is 2.54cm by 2.54cm that links to the article  
+        4. Retrieve five sentences from the article of what is the subject focus, list who are the organisations and the researchers involved, what is the significance of the subject focus in the domain space and its benefits. Provide the complete expansion of the acronym. 
+        5. Retrieve four sentences from the article the achievements, challenges and results. 
+        6. Retrieve three sentences from the article that includes what are the future steps planned.
+        7. All sentences phrased in past tense.
 
         Organize the results by domain, clearly labeling each section."""
-        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=300)
+        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
 
         # Get top articles
         if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
