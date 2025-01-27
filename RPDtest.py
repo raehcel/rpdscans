@@ -96,13 +96,12 @@ def main():
 
     # Define sources with RSS feeds
     rss_sources = [
-        ('https://news.google.com/search?q=agriculture%20technology%20when%3A7d&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
-        ('https://news.google.com/search?q=agriculture%20grant%20programmes&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
+        ('https://news.google.com/topics/CAAqLAgKIiZDQkFTRmdvTkwyY3ZNVEZqYkdkamJuTjRNaElGWlc0dFIwSW9BQVAB?hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
+        ('https://news.google.com/topics/CAAqLAgKIiZDQkFTRmdvTkwyY3ZNVEZqYkdkamJuTjRNaElGWlc0dFIwSW9BQVAB?hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
         ('https://vegconomist.com/feed/', 'Future Food'),
         ('https://www.just-food.com/feed/', 'Future Food'),
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
-        ('https://news.google.com/search?q=current%20Real-time%20food%20microbial%20contamination%20detection%20newsletter&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Food Safety'),
-        ('https://news.google.com/search?q=food%20safety%20grant%20programmes&hl=en-SG&gl=SG&ceid=SG%3Aen', 'Food Safety'),
+        ('https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvTUwyY3ZNWGxvTjE5eWR6QmtFZ1ZsYmkxSFFpZ0FQAQ?hl=en-SG&gl=SG&ceid=SG%3Aen', 'Food Safety'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),
         ('https://hatcheryfm.com/fish/', 'Aquaculture'),
@@ -211,7 +210,7 @@ def main():
         For each article, provide:
         1. The article title
         2. Embed a hyperlink to the article within the article's title
-        3. Provide QR code that is 2.54cm by 2.54cm that links to the article  
+        3. Provide QR code that is 2cm by 2cm that links to the article  
         4. Retrieve five sentences from the article of what is the subject focus, list who are the organisations and the researchers involved, what is the significance of the subject focus in the domain space and its benefits. Provide the complete expansion of the acronym. 
         5. Retrieve four sentences from the article the achievements, challenges and results. 
         6. Retrieve three sentences from the article that includes what are the future steps planned.
