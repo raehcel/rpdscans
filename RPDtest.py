@@ -96,7 +96,7 @@ def main():
     
     # Define sources with RSS feeds
     rss_sources = [
-        ('https://www.globalagtechinitiative.com/digital-farming/', 'Agriculture')
+        
         ('https://www.globalagtechinitiative.com/in-field-technologies/', 'Agriculture')
         ('https://agfundernews.com/category/agtech-2', 'Agriculture')
         ('https://www.rapidmicrobiology.com/tag/atp-hygiene-monitoring', 'Food Safety')
