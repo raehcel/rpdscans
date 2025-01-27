@@ -225,4 +225,5 @@ def main():
             st.write("Note: All 5 articles must be provided for each domain.")
             st.write(top_articles)
 
-
+if __name__ == "__main__":
+    main()
