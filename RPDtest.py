@@ -93,15 +93,38 @@ def main():
     
     The app fetches articles from various reputable sources, analyzes them, and presents the most relevant ones to keep you informed about developments that could impact Singapore's food landscape.
     """)
+    import streamlit as st
+import feedparser
+import re
 
+def filter_agritech_articles(rss_url):
+    feed = feedparser.parse(rss_url)
+    agritech_keywords = ['agriculture', 'farming', 'crop', 'precision agriculture', 'agritech', 'smart farming', 'funding programmes']
+    
+    filtered_articles = []
+    for entry in feed.entries:
+        if any(keyword in entry.title.lower() or keyword in entry.summary.lower() for keyword in agritech_keywords):
+            filtered_articles.append(entry)
+    
+    return filtered_articles
+
+# Streamlit app
+st.title('AgriTech News Filter')
+
+rss_url = 'https://news.google.com/rss/search?q=agriculture+technology&hl=en-GB&gl=GB&ceid=GB:en'
+filtered_news = filter_agritech_articles(rss_url)
+
+for article in filtered_news:
+    st.subheader(article.title)
+    st.write(article.summary)
+    st.write(f"[Read more]({article.link})")
+    st.write("---")
+    
     # Define sources with RSS feeds
     rss_sources = [
-        ('https://news.google.com/topics/CAAqLAgKIiZDQkFTRmdvTkwyY3ZNVEZqYkdkamJuTjRNaElGWlc0dFIwSW9BQVAB?hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
-        ('https://news.google.com/topics/CAAqLAgKIiZDQkFTRmdvTkwyY3ZNVEZqYkdkamJuTjRNaElGWlc0dFIwSW9BQVAB?hl=en-SG&gl=SG&ceid=SG%3Aen', 'Agriculture'),
         ('https://vegconomist.com/feed/', 'Future Food'),
         ('https://www.just-food.com/feed/', 'Future Food'),
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
-        ('https://news.google.com/topics/CAAqKggKIiRDQkFTRlFvTUwyY3ZNWGxvTjE5eWR6QmtFZ1ZsYmkxSFFpZ0FQAQ?hl=en-SG&gl=SG&ceid=SG%3Aen', 'Food Safety'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),
         ('https://hatcheryfm.com/fish/', 'Aquaculture'),
