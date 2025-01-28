@@ -103,6 +103,8 @@ def main():
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),
         ('https://hatcheryfm.com/fish/', 'Aquaculture'),
         ('https://hatcheryfm.com/shrimp/', 'Aquaculture')
+        ('https://agfundernews.com/category/agtech-2/feed', 'Agriculture'),
+        ('https://www.rapidmicrobiology.com/news/feed', 'Food Safety')
     ]
 
     # Initialize session state variables
