@@ -107,7 +107,7 @@ def main():
         ('https://www.globalagtechinitiative.com/digital-farming/feed', 'Agriculture'),
         ('https://www.globalagtechinitiative.com/in-field-technologies/feed', 'Agriculture'),
         ('https://www.rapidmicrobiology.com/news/feed', 'Food Safety'),
-        (https://www.food-safety.com/topics/296-news/feed', 'Food Safety'),
+        ('https://www.food-safety.com/topics/296-news/feed', 'Food Safety'),
         ('https://www.food-safety.com/keywords/1870-grants/feed', 'Food Safety')
     ]
 
