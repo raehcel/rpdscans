@@ -68,7 +68,7 @@ def get_top_articles(articles_by_domain, prompt):
                 {"role": "system", "content": "You are an AI assistant tasked with selecting the top 5 articles for each domain (agriculture, aquaculture, future foods, and food safety) most relevant to stakeholders in Singapore's food safety and security."},
                 {"role": "user", "content": f"{prompt}\n\nHere is a list of articles organized by domain:\n\n{articles_text}"}
             ],
-            max_tokens=2500,
+            max_tokens=3500,
             n=1,
             temperature=0.5,
         )
@@ -101,8 +101,6 @@ def main():
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),
-        ('https://hatcheryfm.com/fish/feed/', 'Aquaculture'),
-        ('https://hatcheryfm.com/shrimp/feed/', 'Aquaculture'),
         ('https://agfundernews.com/feed/', 'Agriculture'),
         ('https://www.globalagtechinitiative.com/feed/', 'Agriculture'),
         ('https://www.rapidmicrobiology.com/feed/', 'Food Safety'),
@@ -212,9 +210,9 @@ def main():
         1. The article title
         2. Embed a hyperlink to the article within the article's title
         3. Provide QR code that is 2cm by 2cm that links to the article  
-        4. Retrieve five sentences from the article of what is the subject focus, list who are the organisations and the researchers involved, what is the significance of the subject focus in the domain space and its benefits. Provide the complete expansion of the acronym. 
-        5. Retrieve four sentences from the article the achievements, challenges and results. 
-        6. Retrieve three sentences from the article that includes what are the future steps planned.
+        4. Retrieve 3 sentences from the article of what is the subject focus, list who are the organisations and the researchers involved, what is the significance of the subject focus in the domain space and its benefits. Provide the complete expansion of the acronym. 
+        5. Retrieve 3 sentences from the article the achievements, challenges and results. 
+        6. Retrieve 2 sentences from the article that includes what are the future steps planned.
         7. All sentences phrased in past tense.
 
         Organize the results by domain, clearly labeling each section."""
