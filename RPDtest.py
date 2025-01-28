@@ -102,7 +102,7 @@ def main():
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
         ('https://aquaculturemag.com/feed', 'Aquaculture'),
         ('https://hatcheryfm.com/fish/feed', 'Aquaculture'),
-        ('https://hatcheryfm.com/shrimp/feed', 'Aquaculture')
+        ('https://hatcheryfm.com/shrimp/feed', 'Aquaculture'),
         ('https://agfundernews.com/category/agtech-2/feed', 'Agriculture'),
         ('https://www.globalagtechinitiative.com/digital-farming/feed', 'Agriculture'),
         ('https://www.globalagtechinitiative.com/in-field-technologies/feed', 'Agriculture'),
