@@ -68,7 +68,7 @@ def get_top_articles(articles_by_domain, prompt):
                 {"role": "system", "content": "You are an AI assistant tasked with selecting the top 5 articles for each domain (agriculture, aquaculture, future foods, and food safety) most relevant to stakeholders in Singapore's food safety and security."},
                 {"role": "user", "content": f"{prompt}\n\nHere is a list of articles organized by domain:\n\n{articles_text}"}
             ],
-            max_tokens=1500,
+            max_tokens=2500,
             n=1,
             temperature=0.5,
         )
