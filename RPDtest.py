@@ -103,12 +103,12 @@ def main():
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),
         ('https://hatcheryfm.com/fish/feed/', 'Aquaculture'),
         ('https://hatcheryfm.com/shrimp/feed/', 'Aquaculture')
-        ('https://agfundernews.com/category/agtech-2/feed/', 'Agriculture'),
-        ('https://www.globalagtechinitiative.com/digital-farming/feed/', 'Agriculture'),
-        ('https://www.globalagtechinitiative.com/in-field-technologies/feed/', 'Agriculture'),
-        ('https://www.rapidmicrobiology.com/news/feed/', 'Food Safety'),
-        (https://www.food-safety.com/topics/296-news/feed/', 'Food Safety'),
-        ('https://www.food-safety.com/keywords/1870-grants/feed/', 'Food Safety')
+        ('https://agfundernews.com/category/agtech-2/feed', 'Agriculture'),
+        ('https://www.globalagtechinitiative.com/digital-farming/feed', 'Agriculture'),
+        ('https://www.globalagtechinitiative.com/in-field-technologies/feed', 'Agriculture'),
+        ('https://www.rapidmicrobiology.com/news/feed', 'Food Safety'),
+        (https://www.food-safety.com/topics/296-news/feed', 'Food Safety'),
+        ('https://www.food-safety.com/keywords/1870-grants/feed', 'Food Safety')
     ]
 
     # Initialize session state variables
