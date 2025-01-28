@@ -68,7 +68,7 @@ def get_top_articles(articles_by_domain, prompt):
                 {"role": "system", "content": "You are an AI assistant tasked with selecting the top 5 articles for each domain (agriculture, aquaculture, future foods, and food safety) most relevant to stakeholders in Singapore's food safety and security."},
                 {"role": "user", "content": f"{prompt}\n\nHere is a list of articles organized by domain:\n\n{articles_text}"}
             ],
-            max_tokens=3500,
+            max_tokens=1500,
             n=1,
             temperature=0.5,
         )
@@ -167,7 +167,7 @@ def main():
         st.session_state.current_domain = st.selectbox("Select Domain", list(st.session_state.articles_by_domain.keys()))
 
         articles = st.session_state.articles_by_domain[st.session_state.current_domain]
-        articles_per_page = 5
+        articles_per_page = 10
         total_pages = (len(articles) - 1) // articles_per_page + 1
         
         start_idx = (st.session_state.current_page - 1) * articles_per_page
