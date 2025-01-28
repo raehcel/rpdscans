@@ -218,14 +218,13 @@ def main():
         7. All sentences phrased in past tense.
 
         Organize the results by domain, clearly labeling each section."""
-        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=200)
+        prompt = st.text_area("Edit the prompt if desired:", value=default_prompt, height=300)
 
         # Get top articles
         if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
             with st.spinner("Processing articles... 🤖"):
                 top_articles = get_top_articles(st.session_state.articles_by_domain, prompt)
             st.header("🏅 Top 5 Articles for Each Domain")
-            st.write("Note: All 5 articles must be provided for each domain.")
             st.write(top_articles)
 
 if __name__ == "__main__":
