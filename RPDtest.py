@@ -170,7 +170,7 @@ def main():
                 st.rerun()
 
         st.header("🎛️ Customize Prompt")
-        default_prompt = """The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (food safety, agriculture, aquaculture and future foods) that will impact Singapore's ecosystem. Please select the top five articles for each domain (food safety, agriculture, aquaculture and future foods) that are most relevant to stakeholders in Singapore's food safety and security. Ensure the recommended articles cover diverse topics, avoiding duplication of subject matter.
+        default_prompt = """The intent of the tech scans is to share the potential relevance and application of technology and knowledge that applies to the four domains (aquaculture, future foods, agriculture and food safety) that will impact Singapore's ecosystem. Please select the top five articles for each domain (food safety, agriculture, aquaculture and future foods) that are most relevant to stakeholders in Singapore's food safety and security. Ensure the recommended articles cover diverse topics, avoiding duplication of subject matter.
         Evaluation criteria:
         1. Ignore any developments in Singapore as these are likely already known to the stakeholders.
         2. Disregard articles that are just think pieces about the potential of technology without any real application.
