@@ -77,7 +77,7 @@ def main():
     
     rss_sources = [ 
         ('https://vegconomist.com/feed/', 'Future Food'),
-        ('https://www.just-food.com/feed/', 'Future Food'),
+        ('https://www.foodnavigator.com/arc/outboundfeeds/rss/', 'Future Food'),
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),
