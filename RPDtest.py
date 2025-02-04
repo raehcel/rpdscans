@@ -72,7 +72,7 @@ def main():
     - 🍽️ Future Foods
     - 🧪 Food Safety
     
-    The app fetches articles from various reputable sources, analyzes them, and presents the most relevant ones to keep you informed about developments that could impact Singapore's food landscape.
+    The app fetches articles from various reputable sources, analyzes them, and presents the most relevant ones to keep you informed about developments that could impact Singapore's food landscapes.
     """)
     
     rss_sources = [ 
