@@ -78,6 +78,8 @@ def main():
     rss_sources = [ 
         ('https://vegconomist.com/feed/', 'Future Food'),
         ('https://www.foodnavigator.com/arc/outboundfeeds/rss/', 'Future Food'),
+        ('https://www.foodnavigator-asia.com/arc/outboundfeeds/rss/', 'Future Food'),
+        ('https://www.foodnavigator-usa.com/arc/outboundfeeds/rss/', 'Future Food'),
         ('https://www.fooddive.com/feeds/news/', 'Future Food'),
         ('https://feeds.thefishsite.com/thefishsite-all', 'Aquaculture'),
         ('https://aquaculturemag.com/feed/', 'Aquaculture'),
@@ -176,14 +178,16 @@ def main():
         2. Disregard articles that are just think pieces about the potential of technology without any real application.
         3. Prioritize articles that highlight specific technological advancements or applications over those that simply discuss emerging risks.
         4. Ensure articles are reordered every day to showcase different areas of the domain. 
+        5. Articles must not be from the same website.
+        6. Articles do not have to be in chronological order. 
 
         For each article, provide:
         1. The article title
         2. Embed a hyperlink to the article within the article's title
-        3. Provide QR code that is 2cm by 2cm that links to the article  
+        3. Provide QR code that is 1.5cm by 1.5cm that links to the article  
         4. Retrieve 3 sentences from the article of what is the subject focus, list who are the organisations and the researchers involved, what is the significance of the subject focus in the domain space and its benefits. 
-        5. Retrieve 3 sentences from the article the achievements, challenges and results. 
-        6. Retrieve 2 sentences from the article that includes what are the future steps planned and how it can impact the domain space.
+        5. Retrieve 3 sentences from the article the achievements, novelty, challenges and results. 
+        6. Retrieve 2 sentences from the article that includes what are the future steps planned, relevance to Singapore and how it can impact the domain space.
         7. All sentences phrased in past tense.
 
         Organize the results by domain, clearly labeling each section."""
@@ -192,7 +196,7 @@ def main():
         if st.button("🏆 Get Top Articles", key="get_top_articles_button"):
             with st.spinner("Processing articles... 🤖"):
                 top_articles = get_top_articles(st.session_state.articles_by_domain, prompt)
-            st.header("🏅 Top 5 Articles for Each Domain")
+            st.header("🏅 Top 2 Articles for Each Domain")
             st.write(top_articles)
 
 if __name__ == "__main__":
